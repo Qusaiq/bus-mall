@@ -6,6 +6,8 @@ let left;
 let mid;
 let right;
 let start = 1;
+let votes=[];
+let views=[];
 
 const imgSec = document.getElementById('imgSec');
 const leftImage = document.getElementById('leftImage');
@@ -13,53 +15,53 @@ const midImage = document.getElementById('midImage');
 const rightImage = document.getElementById('rightImage');
 let randomGen = [];
 
-function products(productNames) {
+function Product(productNames) {
   this.productNames = productNames;
   this.imgPath = `./img/products/${productNames}.jpg`;
   this.vote = 0;
   this.viewCount = 0;
-  products.all.push(this);
+  Product.all.push(this);
   if (productNames === 'usb') {
     this.imgPath = `./img/products/${productNames}.gif`;
   }
   // console.table(products.all);
 }
 
-products.all = [];
+Product.all = [];
 for (let i = 0; i < productNames.length; i++) {
-  new products(productNames[i]);
+  new Product(productNames[i]);
 }
 
 function render() {
-  let left = randomNumber(0, products.all.length - 1);
+  let left = randomNumber(0, Product.all.length - 1);
   // console.log('let', left, products.all[left].imgPath);
   randomGen.push(left);
 
-  leftImage.src = products.all[left].imgPath;
-  leftImage.alt = products.all[left].productNames;
-  leftImage.title = products.all[left].productNames;
-  products.all[left].viewCount++;
+  leftImage.src = Product.all[left].imgPath;
+  leftImage.alt = Product.all[left].productNames;
+  leftImage.title = Product.all[left].productNames;
+  Product.all[left].viewCount++;
 
 
-  let right = randomNumber(0, products.all.length - 1);
+  let right = randomNumber(0, Product.all.length - 1);
   while (right === randomGen[0]) {
-    right = randomNumber(0, products.all.length - 1);
+    right = randomNumber(0, Product.all.length - 1);
   }
   randomGen.push(right);
 
-  rightImage.src = products.all[right].imgPath;
-  rightImage.alt = products.all[right].productNames;
-  rightImage.title = products.all[right].productNames;
-  products.all[right].viewCount++;
-  let mid = randomNumber(0, products.all.length - 1);
+  rightImage.src = Product.all[right].imgPath;
+  rightImage.alt = Product.all[right].productNames;
+  rightImage.title = Product.all[right].productNames;
+  Product.all[right].viewCount++;
+  let mid = randomNumber(0, Product.all.length - 1);
   while (mid === randomGen[0] || mid === randomGen[1]) {
-    mid = randomNumber(0, products.all.length - 1);
+    mid = randomNumber(0, Product.all.length - 1);
   }
   randomGen.push(mid);
-  midImage.src = products.all[mid].imgPath;
-  midImage.alt = products.all[mid].productNames;
-  midImage.title = products.all[mid].productNames;
-  products.all[mid].viewCount++;
+  midImage.src = Product.all[mid].imgPath;
+  midImage.alt = Product.all[mid].productNames;
+  midImage.title = Product.all[mid].productNames;
+  Product.all[mid].viewCount++;
 
   randomGen.length = 0;
 
@@ -74,13 +76,13 @@ function timeClicked(event) {
 
 
     if (event.target.id !== 'imgSec')
-      for (let i = 0; i < products.all.length; i++) {
-        if (products.all[i].productNames === event.target.title)
+      for (let i = 0; i < Product.all.length; i++) {
+        if (Product.all[i].productNames === event.target.title)
           // products.all[i].viewCount++;
-          products.all[i].vote++;
+          Product.all[i].vote++;
 
       }
-    console.table(products.all);
+    console.table(Product.all);
 
     start++;
     render();
@@ -99,17 +101,50 @@ function timeClicked(event) {
 document.getElementById('btn').addEventListener('click', list);
 function list(event) {
   let unorderdList = document.getElementById('unorderList');
-  for (let i = 0; i < productNames.length; i++) {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${productNames[i]} has ${products.all[i].vote}.and was seen ${products.all[i].viewCount}`;
-    unorderdList.appendChild(listItem);
+  for (let i = 0; i < Product.all.length; i++) {
+    votes.push(Product.all[i].vote);
+    views.push(Product.all[i].viewCount);
+    // const listItem = document.createElement('li');
+    // listItem.textContent = `${productNames[i]} has ${Product.all[i].vote}.and was seen ${Product.all[i].viewCount}`;
+    // unorderdList.appendChild(listItem);
   }
-  document.getElementById('btn').textContent="Reset";
+  // document.getElementById('btn').textContent="Reset";
   document.getElementById('btn').removeEventListener('click', list);
+  console.log('votes :',votes);
+  console.log('views :',views);
+  chartRender();
   render();
 }
 
+function chartRender(){
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let chart = new Chart(ctx, {
+  // The type of chart we want to create
+    type: 'bar',
 
+    // The data for our dataset
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: 'Products Votes',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: votes
+      
+      },
+      {
+        label: 'Products Views',
+        backgroundColor: 'yellow',
+        borderColor: 'rgb(255, 99, 132)',
+        data: views
+      }]
+    },
+
+    // Configuration options go here
+    // options: {}
+  });
+
+}
 render();
 
 
