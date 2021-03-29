@@ -1,47 +1,87 @@
-body{
-height: 100%;
-width: 100%;
-margin: 0px;
-}
-.container{
-    
-}
-section img{
-    width:400px ;
-    height:400px ;
-}
-section img:nth-of-type(2){
-    margin: 0 40px 0 40px;
-}
-section{
-    margin-top: 100px;
+body {
+    height: 100%;
     width: 100%;
-    text-align: center;
+    margin: 0px;
+    margin-top: -20px;
 
 }
-button{
-margin-left: 310px;
-margin-top: 200px;
-outline: none;
-border-radius: 10px;
-background-color:orangered;
-color: white;
-width: 100px;
-height: 25px;
-visibility: hidden;
+
+.container {
+    position: relative;
+    background-color: rgb(39, 34, 39);}
+header nav{
+    text-align: center;
+    height: 100px;
+    padding-bottom: 20px;
 }
-ul{
+header nav div{
+    font-family: 'Merienda', cursive;    font-size: 40px;
+    color: rgba(255, 68, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.575);
+    width: 50%;
+    margin-top: 100px;
+    padding-top: 36px;
+    padding-bottom: 20px;
+    margin-top: 16px;
+    border-radius: 20px;
+    text-align: center;
+    margin: auto;
+
+}
+
+section img {
+    
+    border-radius: 20px;
+    width: 400px;
+    height: 400px;
+}
+
+section img:nth-of-type(2) {
+    margin: 0 40px 0 40px;
+}
+
+section {
+
+    margin-top: 50px;
+    margin: auto;
+    width:68%;
+    
+}
+
+button {
+    margin-left: 310px;
+    margin-top: 40px;
+    outline: none;
+    border-radius: 10px;
+    background-color: orangered;
+    color: white;
+    width: 100px;
+    height: 25px;
+    visibility: hidden;
+}
+
+ul {
     position: relative;
     width: 500px;
     left: 320px;
     list-style: disc;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    
+}
 
+#myChart {
+    width: 1600px;
+    height: 900px;
+    display: block;
 }
-ul li{
+.myChart{
+    width: 1600px;
+    height: 900px;
+}
+
+/* ul li{
     margin-bottom: 20px;
-}
+} */
+
 /* header{
     position: relative;
     height: 100px;
@@ -52,6 +92,7 @@ header div{
     bottom: 0;
     margin: auto;
 } */
+
 /* ul li:nth-child(n+6):nth-child(-n+12){
     margin-bottom: 700px;
     padding: 50px;
