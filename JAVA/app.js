@@ -27,18 +27,16 @@ function Product(productNames) {
 
 
 }
-function storeData() {
-  let storeData = JSON.stringify(Product.all);
-  storage.setItem('products', storeData);
-}
-function getData() {
-  let getData = localStorage.getItem('products');
+function storageData() {
+  let productData = localStorage.getItem('product');
+  let getData = JSON.parse(productData);
+  if (getData && getData.length) {
 
-  let normalData = JSON.parse(getData);
-  console.log(normalData);
-  list();
+    Product.all=getData;
+    console.log('date :');
+    return ;
+  }
 }
-
 Product.all = [];
 for (let i = 0; i < productNames.length; i++) {
   new Product(productNames[i]);
@@ -119,9 +117,11 @@ function timeClicked(event) {
 
   }
   else {
+
     console.log('done');
     imgSec.removeEventListener('click', timeClicked);
     document.getElementById('btn').style.visibility = 'visible';
+
   }
   // let x= productNames.indexOf(event.target.title);
   // productNames.splice(x,1);
@@ -136,19 +136,24 @@ function list(event) {
   for (let i = 0; i < Product.all.length; i++) {
     votes.push(Product.all[i].vote);
     views.push(Product.all[i].viewCount);
-    storeData();
+    // storeData();
 
     // const listItem = document.createElement('li');
     // listItem.textContent = `${productNames[i]} has ${Product.all[i].vote}.and was seen ${Product.all[i].viewCount}`;
     // unorderdList.appendChild(listItem);
   }
-  console.log(storeData);
+  // console.log(storeData);
   // document.getElementById('btn').textContent="Reset";
   document.getElementById('btn').removeEventListener('click', list);
+
   console.log('votes :', votes);
   console.log('views :', views);
+  let saveData = JSON.stringify(Product.all);
+  localStorage.setItem('product', saveData);
   chartRender();
+
   render();
+
 }
 function chartRender() {
   let ctx = document.getElementById('myChart').getContext('2d');
